@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanupriya Art — TPG Art</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf8;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --border: #e2e2de;
+      --accent: #2c2c2c;
+      --hover: #111;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 160px 2rem 80px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 3px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--hover); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--text); }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: 1200px;
+      margin: 0 auto 5rem;
+      padding: 0 2rem;
+    }
+    .divider hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 5rem 0;
+    }
+
+    .gallery-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .painting-card {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #efefed;
+    }
+
+    .painting-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .painting-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .painting-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      transition: background 0.3s ease;
+    }
+
+    .painting-card:hover .painting-overlay {
+      background: rgba(10,10,10,0.45);
+    }
+
+    .painting-info {
+      transform: translateY(8px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .painting-card:hover .painting-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .painting-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .painting-medium {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.3rem;
+    }
+
+    .view-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 38px;
+      height: 38px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+    }
+
+    .painting-card:hover .view-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .view-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--text);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(8,8,8,0.96);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .lightbox-inner img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    .lightbox-caption {
+      text-align: center;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .lightbox-caption strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      display: block;
+    }
+
+    .lightbox-caption span {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+    .lightbox-close svg {
+      width: 18px;
+      height: 18px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-nav:hover { background: rgba(255,255,255,0.2); }
+    .lightbox-nav svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    #lb-prev { left: 1.5rem; }
+    #lb-next { right: 1.5rem; }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 5rem 0;
+      background: #f3f3f0;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text {}
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat {}
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .about-feature {
+      position: relative;
+    }
+
+    .about-feature img {
+      width: 100%;
+      border-radius: 4px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .about-feature-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(8px);
+      padding: 1rem 1.25rem;
+      border-radius: 3px;
+    }
+
+    .about-feature-caption strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .about-feature-caption span {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 5rem 0;
+    }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .contact-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--text);
+      background: var(--text);
+      color: #fff;
+    }
+
+    .contact-link svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-link:hover svg { stroke: #fff; }
+
+    .contact-form {}
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: #fff;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--text);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      padding: 2.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+    }
+
+    .footer-ig a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+
+    .footer-ig a:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-feature { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      #lb-prev { left: 0.5rem; }
+      #lb-next { right: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Tanupriya Art</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.instagram.com/tpgart/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section>
+    <div class="hero">
+      <p class="hero-eyebrow">Artist · TPG Art</p>
+      <h1>Art that <em>feels</em><br>before it speaks.</h1>
+      <p class="hero-desc">
+        Hyperrealistic pencil and charcoal works by Tanupriya — each piece
+        built stroke by stroke, capturing the texture of skin, fur, and emotion
+        with extraordinary detail.
+      </p>
+      <div class="hero-actions">
+        <a href="#gallery" class="btn btn-primary">View Paintings</a>
+        <a href="#contact" class="btn btn-outline">Commission a Piece</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="section-header">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">Paintings</h2>
+    </div>
+
+    <div class="gallery-grid">
+
+      <!-- Painting 1 -->
+      <div class="painting-card"
+           onclick="openLightbox(0)"
+           data-title="Fire &amp; Scars"
+           data-medium="Color Pencil">
+        <img src="Tanu_s%20Paintings/IMG_20190204_202514_926_Original.jpg"
+             alt="Fire &amp; Scars — hyperrealistic color pencil portrait" />
+        <div class="painting-overlay">
+          <div class="view-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="painting-info">
+            <div class="painting-title">Fire &amp; Scars</div>
+            <div class="painting-medium">Color Pencil · 2019</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painting 2 -->
+      <div class="painting-card"
+           onclick="openLightbox(1)"
+           data-title="Duality"
+           data-medium="Mixed Media">
+        <img src="Tanu_s%20Paintings/IMG_20190514_233510_945_Original.jpg"
+             alt="Duality — surreal photorealistic portrait" />
+        <div class="painting-overlay">
+          <div class="view-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="painting-info">
+            <div class="painting-title">Duality</div>
+            <div class="painting-medium">Mixed Media · 2019</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painting 3 -->
+      <div class="painting-card"
+           onclick="openLightbox(2)"
+           data-title="Majesty"
+           data-medium="Graphite &amp; Charcoal">
+        <img src="Tanu_s%20Paintings/MVIMG_20200725_182032~3-01_Original.jpeg"
+             alt="Majesty — hyperrealistic graphite lion portrait" />
+        <div class="painting-overlay">
+          <div class="view-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="painting-info">
+            <div class="painting-title">Majesty</div>
+            <div class="painting-medium">Graphite &amp; Charcoal · 2020</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="lightbox-nav" id="lb-prev" onclick="lightboxNav(-1)" aria-label="Previous">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="lightbox-nav" id="lb-next" onclick="lightboxNav(1)" aria-label="Next">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lightbox-inner">
+      <img id="lb-img" src="" alt="" />
+      <div class="lightbox-caption">
+        <strong id="lb-title"></strong>
+        <span id="lb-medium"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header" style="padding-top: 5rem;">
+      <span class="section-label">Artist</span>
+      <h2 class="section-title">About Tanupriya</h2>
+    </div>
+    <div class="about-inner">
+      <div class="about-text">
+        <p>
+          Tanupriya is a self-taught hyperrealistic artist whose work blurs the
+          boundary between drawing and photography. Working primarily in color
+          pencil, graphite, and charcoal, she transforms blank paper into
+          breathtaking portraits that seem to breathe.
+        </p>
+        <p>
+          Her subjects — from iconic pop-culture characters to the raw power of
+          wildlife — are rendered with obsessive attention to texture, light, and
+          emotion. Each piece can take hundreds of hours, built up layer by
+          patient layer.
+        </p>
+        <p>
+          Based in India, Tanupriya shares her creative journey on Instagram as
+          <strong>@tpgart</strong>, where her work has inspired thousands of
+          fellow artists and art lovers around the world.
+        </p>
+        <div class="about-stats">
+          <div class="stat">
+            <div class="stat-number">100s</div>
+            <div class="stat-label">Hours per piece</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Years creating</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Layers of detail</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Unique vision</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-feature">
+        <img src="Tanu_s%20Paintings/MVIMG_20200725_182032~3-01_Original.jpeg"
+             alt="Majesty detail" />
+        <div class="about-feature-caption">
+          <strong>Majesty</strong>
+          <span>Graphite &amp; Charcoal · 2020</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header" style="padding-top: 5rem;">
+      <span class="section-label">Get in Touch</span>
+      <h2 class="section-title">Commission a Piece</h2>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-info">
+        <h3>Let's create<br><em style="font-family:'Cormorant Garamond',serif; font-style:italic;">something unforgettable.</em></h3>
+        <p>
+          Interested in a custom portrait, pet portrait, or bespoke artwork?
+          Reach out via the form or connect on Instagram. Tanupriya takes on a
+          limited number of commissions each year to ensure every piece
+          receives the care it deserves.
+        </p>
+        <div class="contact-links">
+          <a href="https://www.instagram.com/tpgart/" target="_blank" rel="noopener" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            @tpgart on Instagram
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject">Commission Type</label>
+          <select id="subject" name="subject">
+            <option value="">Select…</option>
+            <option>Portrait (Person)</option>
+            <option>Pet Portrait</option>
+            <option>Wildlife</option>
+            <option>Pop Culture / Fan Art</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell me about your idea</label>
+          <textarea id="message" name="message" placeholder="Describe what you have in mind — subject, size, reference photos…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+          Send Enquiry
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Tanupriya Art</div>
+      <div class="footer-copy">© 2024 Tanupriya. All rights reserved.</div>
+      <div class="footer-ig">
+        <a href="https://www.instagram.com/tpgart/" target="_blank" rel="noopener">@tpgart</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    const paintings = [
+      {
+        src: "Tanu_s%20Paintings/IMG_20190204_202514_926_Original.jpg",
+        title: "Fire & Scars",
+        medium: "Color Pencil · 2019"
+      },
+      {
+        src: "Tanu_s%20Paintings/IMG_20190514_233510_945_Original.jpg",
+        title: "Duality",
+        medium: "Mixed Media · 2019"
+      },
+      {
+        src: "Tanu_s%20Paintings/MVIMG_20200725_182032~3-01_Original.jpeg",
+        title: "Majesty",
+        medium: "Graphite & Charcoal · 2020"
+      }
+    ];
+
+    let current = 0;
+
+    function openLightbox(index) {
+      current = index;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBg(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function lightboxNav(dir) {
+      current = (current + dir + paintings.length) % paintings.length;
+      updateLightbox();
+    }
+
+    function updateLightbox() {
+      const p = paintings[current];
+      document.getElementById('lb-img').src = p.src;
+      document.getElementById('lb-img').alt = p.title;
+      document.getElementById('lb-title').textContent = p.title;
+      document.getElementById('lb-medium').textContent = p.medium;
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = 'Message sent ✓';
+      btn.style.background = '#4a9e6a';
+      setTimeout(() => {
+        btn.textContent = 'Send Enquiry';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
